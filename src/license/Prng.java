@@ -27,7 +27,7 @@ import java.util.Random;
 public class Prng
     extends java.lang.Number
 {
-    public final static java.lang.String Default = "SHA";
+    public final static java.lang.String Default = "SHA-1";
 
 
     protected int hashCode;
