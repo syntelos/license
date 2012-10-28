@@ -14,11 +14,15 @@ Simple lossy license protocol
 
     license: License, Key, Nonce
 
-      Immutable bit strings with string formatted I/O
+      Mutable bit strings with string formatted I/O
+
+    license: Function
+
+      Configurable hash function
 
     license/json: License, Key, Nonce
 
-      Immutable bit strings with JSON formatted I/O
+      Mutable bit strings with JSON formatted I/O
 
 
  * See PROTOCOL.txt

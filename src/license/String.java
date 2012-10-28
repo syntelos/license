@@ -78,11 +78,17 @@ public class String
         else
             return "";
     }
+    public byte[] getValue(){
+        if (null != this.string)
+            return this.string.toByteArray();
+        else
+            return new byte[0];
+    }
     public java.lang.String getString(){
         return this.getString(16);
     }
     public boolean setString(byte[] string){
-        if (null != string){
+        if (null != string && 0 < string.length){
             try {
                 this.string = new java.math.BigInteger(string);
                 return true;
@@ -97,7 +103,7 @@ public class String
         return this.setString(string,16);
     }
     public boolean setString(java.lang.String string, int radix){
-        if (null != string){
+        if (null != string && 0 < string.length()){
             try {
                 this.string = new java.math.BigInteger(string,radix);
                 return true;
