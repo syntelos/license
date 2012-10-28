@@ -21,6 +21,16 @@ package license;
 public class Hash
     extends license.String
 {
+
+    public Hash(int radix, byte[] value){
+        super(radix,value);
+    }
+    public Hash(int radix, java.lang.String value){
+        super(radix,value);
+    }
+    public Hash(int radix){
+        super(radix);
+    }
     public Hash(byte[] value){
         super(value);
     }

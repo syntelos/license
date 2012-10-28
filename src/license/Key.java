@@ -21,14 +21,25 @@ package license;
 public class Key
     extends license.String
 {
+    public final static int DefaultRadix = 36;
 
+
+    public Key(int radix, byte[] value){
+        super(radix,value);
+    }
+    public Key(int radix, java.lang.String value){
+        super(radix,value);
+    }
+    public Key(int radix){
+        super(radix);
+    }
     public Key(byte[] value){
-        super(value);
+        super(DefaultRadix,value);
     }
     public Key(java.lang.String value){
-        super(value);
+        super(DefaultRadix,value);
     }
     public Key(){
-        super();
+        super(DefaultRadix);
     }
 }

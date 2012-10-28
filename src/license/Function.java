@@ -73,15 +73,23 @@ public class Function
         if (null != a && null != b && null != this.function){
             final byte[] av = a.getValue();
             final byte[] bv = b.getValue();
-            final int len = av.length;
-            if (len == bv.length){
-                final byte[] iv = new byte[len];
-                for (int cc = 0; cc < len; cc++){
-                    iv[cc] = (byte)((0xFF & av[cc]) ^ (0xFF & bv[cc]));
+            final int alen = av.length;
+            final int blen = bv.length;
+            final int len = java.lang.Math.max(alen,blen);
+
+            final byte[] iv = new byte[len];
+            for (int cc = 0; cc < len; cc++){
+                if (cc < alen){
+                    if (cc < blen)
+                        iv[cc] = (byte)((0xFF & av[cc]) ^ (0xFF & bv[cc]));
+                    else
+                        iv[cc] = av[cc];
                 }
-                this.function.update(iv);
-                return true;
+                else 
+                    iv[cc] = bv[cc];
             }
+            this.function.update(iv);
+            return true;
         }
         return false;
     }

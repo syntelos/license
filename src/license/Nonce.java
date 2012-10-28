@@ -21,14 +21,25 @@ package license;
 public class Nonce
     extends license.String
 {
+    public final static int DefaultRadix = Key.DefaultRadix;
+
+
+    public Nonce(int radix, byte[] value){
+        super(radix,value);
+    }
+    public Nonce(int radix, java.lang.String value){
+        super(radix,value);
+    }
+    public Nonce(int radix){
+        super(radix);
+    }
     public Nonce(byte[] value){
-        super(value);
+        super(DefaultRadix,value);
     }
     public Nonce(java.lang.String value){
-        super(value);
+        super(DefaultRadix,value);
     }
     public Nonce(){
-        super();
+        super(DefaultRadix);
     }
-
 }
