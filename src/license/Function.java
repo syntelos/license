@@ -19,7 +19,9 @@
 package license;
 
 import java.lang.reflect.Constructor;
+
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 /**
  * The name of this function references an available {@link
@@ -108,6 +110,55 @@ public class Function
             }
         }
     }
+    public SecureRandom createSecureRandom(int nbits){
+        SecureRandom prng = null;
+
+        if (null != this.name){
+
+            try {
+                prng = SecureRandom.getInstance(this.name);
+            }
+            catch (Exception exc){
+
+                prng = new SecureRandom();
+            }
+        }
+        else {
+            prng = new SecureRandom();
+        }
+
+        prng.generateSeed(nbits);
+        return prng;
+    }
+    /**
+     * Define a new random number in a string class.
+     */
+    public <S extends license.String> S create(Class<S> clas, int nbits){
+        final SecureRandom prng = this.createSecureRandom(nbits);
+        if (null != prng){
+            final byte[] bits = new java.math.BigInteger(nbits,prng).toByteArray();
+
+            try {
+                final Constructor<S> ctor = (Constructor<S>)clas.getConstructor(ConstructorArgType);
+
+                return ctor.newInstance(new Object[]{bits});
+            }
+            catch (Exception exc){
+                throw new IllegalArgumentException(clas.getName(),exc);
+            }
+        }
+        else {
+            try {
+                final Constructor<S> ctor = (Constructor<S>)clas.getConstructor(ConstructorArgType);
+
+                return ctor.newInstance(new Object[]{null});
+            }
+            catch (Exception exc){
+                throw new IllegalArgumentException(clas.getName(),exc);
+            }
+        }
+    }
+
     public boolean hasName(){
         return (null != name);
     }

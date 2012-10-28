@@ -18,6 +18,8 @@
  */
 package license;
 
+import java.security.SecureRandom;
+
 /**
  * Mutable protocol member
  * 
@@ -113,6 +115,16 @@ public class String
             }
         }
         return false;
+    }
+    /**
+     * Define this string with a new random number
+     */
+    public <S extends license.String> S create(int nbits){
+        final SecureRandom prng = new SecureRandom();
+        prng.generateSeed(nbits);
+
+        this.string = new java.math.BigInteger(nbits,prng);
+        return (S)this;
     }
     public int hashCode(){
         return this.toString().hashCode();
