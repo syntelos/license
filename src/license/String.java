@@ -18,7 +18,7 @@
  */
 package license;
 
-import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * Mutable protocol member
@@ -28,7 +28,7 @@ import java.security.SecureRandom;
  * @see Nonce
  */
 public class String
-    extends java.lang.Number
+    extends Prng
 {
 
     private java.math.BigInteger string;
@@ -91,43 +91,52 @@ public class String
     }
     public boolean setString(byte[] string){
         if (null != string && 0 < string.length){
-            try {
-                this.string = new java.math.BigInteger(string);
-                return true;
-            }
-            catch (RuntimeException empty){
 
-            }
+            return this.setString(new java.math.BigInteger(string));
         }
-        return false;
+        else
+            return false;
     }
     public boolean setString(java.lang.String string){
         return this.setString(string,16);
     }
     public boolean setString(java.lang.String string, int radix){
         if (null != string && 0 < string.length()){
-            try {
-                this.string = new java.math.BigInteger(string,radix);
-                return true;
-            }
-            catch (RuntimeException empty){
 
-            }
+            return this.setString(new java.math.BigInteger(string,radix));
         }
-        return false;
+        else
+            return false;
+    }
+    public boolean setString(java.math.BigInteger bint){
+
+        if (null != bint){
+
+            this.string = bint;
+
+            this.hashCode = bint.hashCode();
+
+            return true;
+        }
+        else
+            return false;
     }
     /**
      * Define this string with a new random number
      */
     public <S extends license.String> S create(int nbits){
-        final SecureRandom prng = new SecureRandom();
-        prng.generateSeed(nbits);
+        try {
+            final Random prng = this.createPrng(nbits);
 
-        this.string = new java.math.BigInteger(nbits,prng);
-        return (S)this;
-    }
-    public int hashCode(){
-        return this.toString().hashCode();
+            this.string = new java.math.BigInteger(nbits,prng);
+
+            this.hashCode = this.string.hashCode();
+
+            return (S)this;
+        }
+        catch (Exception exc){
+            throw new IllegalArgumentException(Function.Default,exc);
+        }
     }
     public java.lang.String toString(){
         return this.getString();

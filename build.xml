@@ -7,6 +7,8 @@
   <property name="json.src" value="json/src"/>
   <property name="json.lib" value="json/lib"/>
   <property name="json.bin" value="json/bin"/>
+  <property name="test.src" value="test/src"/>
+  <property name="test.bin" value="test/bin"/>
   <property name="dst" value="."/>
 
   <property name="compiler.source" value="1.5"/>
@@ -42,6 +44,7 @@
 
     <antcall target="jar"/>
     <antcall target="json"/>
+    <antcall target="test"/>
   </target>
 
 
@@ -117,6 +120,50 @@
       <classpath>
         <path location="${target.jar}"/>
         <path refid="json.lib.path"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="test" depends="compile-test" description="Package bin to target jar, clean bin.">
+
+    <delete file="${target.test.jar}"/>
+    <jar jarfile="${target.test.jar}" basedir="${test.bin}" >
+      <manifest>
+        <attribute name="Main-Class" value="Random"/>
+        <attribute name="Class-Path" value="${lib.path.manifest}"/>
+      </manifest>
+    </jar>
+    <delete dir="${test.bin}"/>
+  </target>
+
+  <target name="compile-test" description="Compile src to bin">
+
+    <version/>
+
+    <property name="target.test.jar" value="${dst}/${ant.project.name}-test-${this.version}.jar"/>
+
+    <java outputproperty="lib.path.manifest" classpath="${ant}" classname="LibPathManifest" failonerror="true">
+      <arg value="${target.jar}"/>
+    </java>
+    <echo/>
+    <echo message="Package-Jar-Test: ${target.test.jar}"/>
+    <echo message="Package-Jar-Test-Class-Path: ${lib.path.manifest}"/>
+
+    <echo/>
+
+    <delete dir="${test.bin}"/>
+    <mkdir dir="${test.bin}"/>
+    <copy todir="${test.bin}">
+      <fileset dir="${test.src}" includes="**/*.properties"/>
+      <fileset dir="${test.src}" includes="**/*.txt"/>
+      <fileset dir="${test.src}" includes="**/*.xml"/>
+    </copy>
+
+    <javac srcdir="${test.src}" destdir="${test.bin}" debug="${compiler.debug}" encoding="${compiler.encoding}"
+           source="${compiler.source}" target="${compiler.target}">
+      <classpath>
+        <path location="${target.jar}"/>
+
       </classpath>
     </javac>
   </target>

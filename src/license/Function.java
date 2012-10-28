@@ -21,7 +21,7 @@ package license;
 import java.lang.reflect.Constructor;
 
 import java.security.MessageDigest;
-import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * The name of this function references an available {@link
@@ -38,9 +38,13 @@ import java.security.SecureRandom;
  * hash function. </p>
  */
 public class Function
-    extends Object
+    extends Prng
 {
+    public final static java.lang.String Default = "SHA";
+
+
     private java.lang.String name;
+
     private MessageDigest function;
 
 
@@ -110,31 +114,11 @@ public class Function
             }
         }
     }
-    public SecureRandom createSecureRandom(int nbits){
-        SecureRandom prng = null;
-
-        if (null != this.name){
-
-            try {
-                prng = SecureRandom.getInstance(this.name);
-            }
-            catch (Exception exc){
-
-                prng = new SecureRandom();
-            }
-        }
-        else {
-            prng = new SecureRandom();
-        }
-
-        prng.generateSeed(nbits);
-        return prng;
-    }
     /**
      * Define a new random number in a string class.
      */
     public <S extends license.String> S create(Class<S> clas, int nbits){
-        final SecureRandom prng = this.createSecureRandom(nbits);
+        final Random prng = this.createPrng(this.name,nbits);
         if (null != prng){
             final byte[] bits = new java.math.BigInteger(nbits,prng).toByteArray();
 
@@ -170,15 +154,14 @@ public class Function
             try {
                 this.function = MessageDigest.getInstance(name);
                 this.name = name;
+                this.hashCode = name.hashCode();
             }
             catch (Exception exc){
 
+                //throw new IllegalArgumentException(name);
             }
         }
         return false;
-    }
-    public int hashCode(){
-        return this.toString().hashCode();
     }
     public boolean equals(java.lang.Object that){
         if (this == that)
