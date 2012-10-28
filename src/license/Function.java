@@ -26,7 +26,7 @@ import java.util.Random;
 /**
  * The name of this function references an available {@link
  * java.security.MessageDigest MessageDigest} hash function, for
- * example "SHA".  
+ * example "SHA-1".  
  * 
  * <p> The name is the identity of an instance of this class, and the
  * primary state of an instance of this class.  It may be set and
@@ -40,7 +40,7 @@ import java.util.Random;
 public class Function
     extends Prng
 {
-    public final static java.lang.String Default = "SHA";
+    public final static java.lang.String Default = "SHA-1";
 
 
     private java.lang.String name;
