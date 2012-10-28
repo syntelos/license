@@ -24,4 +24,11 @@ public class Nonce
     public Nonce(byte[] value){
         super(value);
     }
+    public Nonce(java.lang.String value){
+        super(value);
+    }
+    public Nonce(){
+        super();
+    }
+
 }

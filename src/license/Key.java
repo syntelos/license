@@ -25,4 +25,10 @@ public class Key
     public Key(byte[] value){
         super(value);
     }
+    public Key(java.lang.String value){
+        super(value);
+    }
+    public Key(){
+        super();
+    }
 }

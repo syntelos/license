@@ -40,6 +40,9 @@ public class String
         super();
         this.setString(string);
     }
+    public String(){
+        super();
+    }
 
 
     public int intValue(){
