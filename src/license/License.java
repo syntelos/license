@@ -1,6 +1,6 @@
 /*
- * Vector (http://code.google.com/p/java-license/)
- * Copyright (C) 2012, The DigiVac Company
+ * Simple Lossy License (http://github.com/syntelos/license)
+ * Copyright (C) 2012, John Pritchard
  * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
