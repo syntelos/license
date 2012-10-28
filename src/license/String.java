@@ -18,18 +18,97 @@
  */
 package license;
 
+/**
+ * Mutable protocol member
+ * 
+ * @see Key
+ * @see License
+ * @see Nonce
+ */
 public class String
-    extends java.math.BigInteger
+    extends java.lang.Number
 {
 
-    public String(byte[] value){
-        super(value);
+    private java.math.BigInteger string;
+
+
+    public String(java.lang.String string){
+        super();
+        this.setString(string);
+    }
+    public String(byte[] string){
+        super();
+        this.setString(string);
     }
 
-    public License setLicense(java.lang.String value){
-        throw new UnsupportedOperationException();
+
+    public int intValue(){
+        if (null != this.string)
+            return this.string.intValue();
+        else
+            return 0;
     }
-    public java.lang.String getLicense(){
-        throw new UnsupportedOperationException();
+    public long longValue(){
+        if (null != this.string)
+            return this.string.longValue();
+        else
+            return 0;
+    }
+    public float floatValue(){
+        if (null != this.string)
+            return this.string.floatValue();
+        else
+            return 0;
+    }
+    public double doubleValue(){
+        if (null != this.string)
+            return this.string.doubleValue();
+        else
+            return 0;
+    }
+    public boolean hasString(){
+        return (null != this.string);
+    }
+    public java.lang.String getString(int radix){
+        if (null != this.string)
+            return this.string.toString(radix);
+        else
+            return "";
+    }
+    public java.lang.String getString(){
+        return this.getString(16);
+    }
+    public boolean setString(byte[] string){
+        if (null != string){
+            try {
+                this.string = new java.math.BigInteger(string);
+                return true;
+            }
+            catch (RuntimeException empty){
+
+            }
+        }
+        return false;
+    }
+    public boolean setString(java.lang.String string){
+        return this.setString(string,16);
+    }
+    public boolean setString(java.lang.String string, int radix){
+        if (null != string){
+            try {
+                this.string = new java.math.BigInteger(string,radix);
+                return true;
+            }
+            catch (RuntimeException empty){
+
+            }
+        }
+        return false;
+    }
+    public int hashCode(){
+        return this.toString().hashCode();
+    }
+    public java.lang.String toString(){
+        return this.getString();
     }
 }

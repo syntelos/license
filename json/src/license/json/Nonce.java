@@ -37,12 +37,12 @@ public class Nonce
     }
     public ObjectJson toJson(ObjectJson thisModel){
 
-        thisModel.setValue("license",this.getLicense());
+        thisModel.setValue("nonce",this.getString());
 
         return thisModel;
     }
     public boolean fromJson(Json thisModel){
-        this.setLicense( (String)thisModel.getValue("license"));
+        this.setString( (String)thisModel.getValue("nonce"));
         return true;
     }
 }

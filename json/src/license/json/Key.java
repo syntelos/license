@@ -38,12 +38,12 @@ public class Key
     }
     public ObjectJson toJson(ObjectJson thisModel){
 
-        thisModel.setValue("license",this.getLicense());
+        thisModel.setValue("key",this.getString());
 
         return thisModel;
     }
     public boolean fromJson(Json thisModel){
-        this.setLicense( (String)thisModel.getValue("license"));
+        this.setString( (String)thisModel.getValue("key"));
         return true;
     }
 }

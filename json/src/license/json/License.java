@@ -39,12 +39,12 @@ public class License
     }
     public ObjectJson toJson(ObjectJson thisModel){
 
-        thisModel.setValue("license",this.getLicense());
+        thisModel.setValue("license",this.getString());
 
         return thisModel;
     }
     public boolean fromJson(Json thisModel){
-        this.setLicense( (String)thisModel.getValue("license"));
+        this.setString( (String)thisModel.getValue("license"));
         return true;
     }
 }

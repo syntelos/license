@@ -30,13 +30,19 @@
       <property name="target.jar" value="${dst}/${ant.project.name}-${this.version}.jar"/>
 
       <echo/>
-      <echo message="Version: ${ant.project.name}-${this.version}"/>
-      <echo message="Jar: ${target.jar}"/>
+      <echo message="Package-Version: ${ant.project.name}-${this.version}"/>
+      <echo message="Package-Jar: ${target.jar}"/>
       <echo/>
 
     </sequential>
   </macrodef>
 
+
+  <target name="all" description="Rebuild all jars">
+
+    <antcall target="jar"/>
+    <antcall target="json"/>
+  </target>
 
 
   <target name="jar" depends="compile" description="Package bin to target jar, clean bin.">
@@ -93,8 +99,8 @@
       <arg value="${toString:json.lib.path}"/>
     </java>
     <echo/>
-    <echo message="Json: ${target.jar}"/>
-    <echo message="Class-Path: ${lib.path.manifest}"/>
+    <echo message="Package-Jar-Json: ${target.json.jar}"/>
+    <echo message="Package-Jar-Json-Class-Path: ${lib.path.manifest}"/>
 
     <echo/>
 
