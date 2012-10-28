@@ -19,7 +19,7 @@
 package license;
 
 public class Key
-    extends java.math.BigInteger
+    extends license.String
 {
 
     public Key(byte[] value){

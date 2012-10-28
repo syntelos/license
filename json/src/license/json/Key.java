@@ -18,11 +18,32 @@
  */
 package license.json;
 
+import json.Json;
+import json.ObjectJson;
+
+/**
+ * JSON I/O
+ */
 public class Key
     extends license.Key
 {
 
     public Key(byte[] value){
         super(value);
+    }
+
+
+    public ObjectJson toJson(){
+        return this.toJson(new ObjectJson());
+    }
+    public ObjectJson toJson(ObjectJson thisModel){
+
+        thisModel.setValue("license",this.getLicense());
+
+        return thisModel;
+    }
+    public boolean fromJson(Json thisModel){
+        this.setLicense( (String)thisModel.getValue("license"));
+        return true;
     }
 }

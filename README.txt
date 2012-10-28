@@ -12,9 +12,13 @@ Simple lossy license protocol
 
   Classes
 
-    License, Key, Nonce
+    license: License, Key, Nonce
 
       Immutable bit strings with string formatted I/O
+
+    license/json: License, Key, Nonce
+
+      Immutable bit strings with JSON formatted I/O
 
 
  * See PROTOCOL.txt

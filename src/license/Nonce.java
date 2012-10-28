@@ -19,7 +19,7 @@
 package license;
 
 public class Nonce
-    extends java.math.BigInteger
+    extends license.String
 {
     public Nonce(byte[] value){
         super(value);

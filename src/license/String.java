@@ -16,33 +16,20 @@
  * along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-package license.json;
+package license;
 
-import json.Json;
-import json.ObjectJson;
-
-/**
- * JSON I/O
- */
-public class Nonce
-    extends license.Nonce
+public class String
+    extends java.math.BigInteger
 {
-    public Nonce(byte[] value){
+
+    public String(byte[] value){
         super(value);
     }
 
-
-    public ObjectJson toJson(){
-        return this.toJson(new ObjectJson());
+    public License setLicense(java.lang.String value){
+        throw new UnsupportedOperationException();
     }
-    public ObjectJson toJson(ObjectJson thisModel){
-
-        thisModel.setValue("license",this.getLicense());
-
-        return thisModel;
-    }
-    public boolean fromJson(Json thisModel){
-        this.setLicense( (String)thisModel.getValue("license"));
-        return true;
+    public java.lang.String getLicense(){
+        throw new UnsupportedOperationException();
     }
 }

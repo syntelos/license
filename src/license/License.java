@@ -19,7 +19,7 @@
 package license;
 
 public class License
-    extends java.math.BigInteger
+    extends license.String
 {
 
     public License(byte[] value){
