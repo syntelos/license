@@ -1,0 +1,105 @@
+
+Simply lossy license protocol
+
+  Overview
+
+    A shared secret is hashed with a nonce to express knowledge of the
+    shared secret for a public identifier.
+
+    * License Client
+
+      Knows the public identifier, and the shared secret key.  Needs
+      license access rights with the Server.
+
+    * License Server
+
+      Creates and stores the public identifier and the shared secret
+      key, offers license access rights to anyone with the identifier
+      and key.
+
+    * License Identifier
+
+      A long random number -- format: base 16 or 64.  Length
+      determined as a probabilistic (collision) multiple of the
+      planned number of clients, for example 64 bits.
+
+    * License Key
+
+      A long random number -- format: base 16 or 64.  Same length as
+      Nonce, greater than or equal to 1024.
+
+    * License Nonce
+
+      A long random number for one use only offered to any requestor
+      with a valid identifier.  Same length as Key, greater than or
+      equal to 1024.
+
+    * License Hash
+
+      A long random number -- the hash of the Key and Nonce using
+      SHA-1 or SHA-2.  Length determined by the hash function.
+
+  Operation
+
+    1. 
+
+      A license protocol client executable is distributed to licensed
+      users by a license protocol server.
+
+      A public identifier and secret key is created by the Server and
+      shared with (copied to) a Client.
+
+    2.
+
+      The Client begins a stateful conversation with a Server by
+      requesting a Nonce for its Identifier.
+
+      The Nonce and Key are combined and hashed by the Client, and
+      copied to the Server (with its Identifier).
+
+      The Server accepts or rejects the Hash string as establishing
+      license access rights.
+
+    
+  Key sharing
+
+    Copy methods are designed according to application privacy
+    requirements and delivery processes.
+
+    A key distributed with software supports only (very) low risk
+    applications.
+
+    A key distributed out of band, for example by postal mail,
+    supports (only) slightly more risk.
+
+  Nonce Key Hashing
+
+    * XOR the Key and Nonce into an intermediate bit string
+
+    * Apply a known hash function to the intermediate bit string
+
+    * Copy the hash output bit string
+
+  Security
+
+    This simple lossy license protocol may be applicable to a small
+    class of open services.
+
+    It has numerous defeats (successful attack vectors), sufficient to
+    (very) light protection of license access rights.
+
+    Some applications exist that need to avoid general access, only.
+
+    Applications intended for unique licensing may decide that sharing
+    is a manageable risk, while others may enjoy sharing.
+
+    A lossy management of sharing may be possible using statistical
+    methods.  For example, summarizing or visualizing client IP and
+    access logs for a sales staff.  Given a known relationship, usage
+    patterns may be self evident.  For example, clients having one
+    static IP address.
+
+  NO WARRANTY
+
+    USE THIS AT YOUR OWN RISK.
+
