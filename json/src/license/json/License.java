@@ -32,6 +32,12 @@ public class License
     public License(byte[] value){
         super(value);
     }
+    public License(java.lang.String value){
+        super(value);
+    }
+    public License(){
+        super();
+    }
 
 
     public ObjectJson toJson(){
