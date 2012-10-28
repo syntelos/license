@@ -40,7 +40,7 @@
   </macrodef>
 
 
-  <target name="all" description="Rebuild all jars">
+  <target name="all" description="Rebuild all jars and perform all tests">
 
     <antcall target="jar"/>
     <antcall target="json"/>
