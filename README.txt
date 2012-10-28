@@ -1,7 +1,9 @@
 
 Simple lossy license protocol
 
+
   Overview
+
 
     Common base classes in Java for license sharing.
 
@@ -10,19 +12,33 @@ Simple lossy license protocol
 
     The solution set is characterized* for open review.
 
+
   Classes
 
-    license: License, Key, Nonce
+
+    license.{License,Key,Nonce,Hash}
 
       Mutable bit strings with string formatted I/O
 
-    license: Function
+
+    license.json.{License,Key,Nonce,Hash}
+
+      Mutable bit strings with JSON formatted I/O
+
+
+    license.Function
 
       Configurable hash function
 
-    license/json: License, Key, Nonce
+        license.Key key;
+        license.Nonce nonce;
 
-      Mutable bit strings with JSON formatted I/O
+        license.Function function = new license.Function();
+
+        if (function.xor(key,nonce)){
+
+          license.Hash hash = function.digest(license.Hash.class);
+        }
 
 
  * See PROTOCOL.txt
