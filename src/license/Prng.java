@@ -32,12 +32,28 @@ public class Prng
 
     protected int hashCode;
 
+    protected boolean prngSetSeed = true, prngGenerateSeed = false;
+
 
     public Prng(){
         super();
     }
 
 
+    public boolean getPrngSetSeed(){
+        return this.prngSetSeed;
+    }
+    public Prng setPrngSetSeed(boolean un){
+        this.prngSetSeed = un;
+        return this;
+    }
+    public boolean getPrngGenerateSeed(){
+        return this.prngGenerateSeed;
+    }
+    public Prng setPrngGenerateSeed(boolean un){
+        this.prngGenerateSeed = un;
+        return this;
+    }
     public final Random createPrng(int nbits){
 
         return this.createPrng(Default,nbits);
@@ -65,8 +81,22 @@ public class Prng
             prng = new Random();
         }
 
-        //prng.generateSeed(nbits);//to generate 1024 bits, linux goes to native prng and hangs 
-        prng.setSeed(System.nanoTime());
+        if (this.prngGenerateSeed && prng instanceof SecureRandom){
+            /*
+             * Must test exhaustively
+             * 
+             * May go to the native prng for long bit numbers, and
+             * wait for the system or hardware (e.g. linux).
+             */
+            ((SecureRandom)prng).generateSeed(nbits);
+        }
+        else if (this.prngSetSeed){
+            /*
+             * Required
+             */
+            prng.setSeed(System.nanoTime());
+        }
+
         return prng;
     }
     public int intValue(){
