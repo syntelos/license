@@ -3,6 +3,10 @@
 
   <property name="src" value="src"/>
   <property name="bin" value="bin"/>
+  <property name="ant" value="ant"/>
+  <property name="json.src" value="json/src"/>
+  <property name="json.lib" value="json/lib"/>
+  <property name="json.bin" value="json/bin"/>
   <property name="dst" value="."/>
 
   <property name="compiler.source" value="1.5"/>
@@ -24,6 +28,7 @@
       </condition>
 
       <property name="target.jar" value="${dst}/${ant.project.name}-${this.version}.jar"/>
+
       <echo/>
       <echo message="Version: ${ant.project.name}-${this.version}"/>
       <echo message="Jar: ${target.jar}"/>
@@ -56,6 +61,57 @@
 
     <javac srcdir="${src}" destdir="${bin}" debug="${compiler.debug}" encoding="${compiler.encoding}"
            source="${compiler.source}" target="${compiler.target}">
+    </javac>
+  </target>
+
+  <target name="json" depends="compile-json" description="Package bin to target jar, clean bin.">
+
+    <delete file="${target.json.jar}"/>
+    <jar jarfile="${target.json.jar}" basedir="${json.bin}" >
+      <manifest>
+        <attribute name="Class-Path" value="${lib.path.manifest}"/>
+      </manifest>
+    </jar>
+    <delete dir="${json.bin}"/>
+  </target>
+
+  <target name="compile-json" description="Compile src to bin">
+
+    <path id="json.lib.path">
+
+      <fileset dir="${json.lib}">
+        <include name="**/*.jar" />
+      </fileset>
+    </path>
+
+    <version/>
+
+    <property name="target.json.jar" value="${dst}/${ant.project.name}-json-${this.version}.jar"/>
+
+    <java outputproperty="lib.path.manifest" classpath="${ant}" classname="LibPathManifest" failonerror="true">
+      <arg value="${target.jar}"/>
+      <arg value="${toString:json.lib.path}"/>
+    </java>
+    <echo/>
+    <echo message="Json: ${target.jar}"/>
+    <echo message="Class-Path: ${lib.path.manifest}"/>
+
+    <echo/>
+
+    <delete dir="${json.bin}"/>
+    <mkdir dir="${json.bin}"/>
+    <copy todir="${json.bin}">
+      <fileset dir="${json.src}" includes="**/*.properties"/>
+      <fileset dir="${json.src}" includes="**/*.txt"/>
+      <fileset dir="${json.src}" includes="**/*.xml"/>
+    </copy>
+
+    <javac srcdir="${json.src}" destdir="${json.bin}" debug="${compiler.debug}" encoding="${compiler.encoding}"
+           source="${compiler.source}" target="${compiler.target}">
+      <classpath>
+        <path location="${target.jar}"/>
+        <path refid="json.lib.path"/>
+      </classpath>
     </javac>
   </target>
 
